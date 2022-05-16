@@ -3,10 +3,6 @@
 // contracts/BuyMeACoffee.sol
 pragma solidity ^0.8.0;
 
-
-// Switch this to your own contract address once deployed, for bookkeeping!
-// Example Contract Address on Goerli: 0xDBa03676a2fBb6711CB652beF5B7416A53c1421D
-
 // Import Ownable from the OpenZeppelin Contracts library
 import "@openzeppelin/contracts/access/Ownable.sol";
 
