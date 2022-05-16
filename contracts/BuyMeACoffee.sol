@@ -1,12 +1,17 @@
 //SPDX-License-Identifier: Unlicense
-// Contract Address Goreli: 0x1CAad4e59a6D087907D9F9d4A29D6652D3AA6997
+// Contract Address Goreli: 0x38c38861a90CceBfe467C03b686eDB940509B11b
 // contracts/BuyMeACoffee.sol
 pragma solidity ^0.8.0;
+
 
 // Switch this to your own contract address once deployed, for bookkeeping!
 // Example Contract Address on Goerli: 0xDBa03676a2fBb6711CB652beF5B7416A53c1421D
 
-contract BuyMeACoffee {
+// Import Ownable from the OpenZeppelin Contracts library
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+//Abhinav:  use Open Zeppelin - Ownable contract for ownership management at ease
+contract BuyMeACoffee is Ownable {
     // Event to emit when a Memo is created.
     event NewMemo(
         address indexed from,
@@ -23,18 +28,10 @@ contract BuyMeACoffee {
         string message;
     }
     
-    // Address of contract deployer. Marked payable so that
-    // we can withdraw to this address later.
-    address payable owner;
-
     // List of all memos received from coffee purchases.
     Memo[] memos;
 
-    constructor() {
-        // Store the address of the deployer as a payable address.
-        // When we withdraw funds, we'll withdraw here.
-        owner = payable(msg.sender);
-    }
+    constructor() {}
 
     /**
      * @dev fetches all stored memos
@@ -73,6 +70,7 @@ contract BuyMeACoffee {
      * @dev send the entire balance stored in this contract to the owner
      */
     function withdrawTips() public {
-        require(owner.send(address(this).balance));
+        // Abhinav: used owner() method from Ownable contract to get the owner
+        require(payable(owner()).send(address(this).balance));
     }
 }
